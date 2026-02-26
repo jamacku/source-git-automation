@@ -26,6 +26,9 @@ inputs:
   jira-api-token:
     required: false
     description: Jira API Token
+  gemini-api-token:
+    required: true
+    description: Google Gemini API Token
   token:
     required: true
     description: GitHub TOKEN or PAT
@@ -86,6 +89,15 @@ runs:
         pr-metadata: ${{ inputs.pr-metadata && inputs.pr-metadata || steps.metadata.outputs.metadata }}
         token: ${{ inputs.token }}
 
+    # Agentic review of code changes and ci failures
+    - if: ${{ !cancelled() }}
+      id: review-buddy
+      uses: jamacku/review-buddy@main
+      with:
+        pr-metadata: ${{ steps.metadata.outputs.metadata }}
+        gemini-api-key: ${{ inputs.gemini-api-key }}
+        token: ${{ inputs.token }}
+
     # Merge the PR if all checks passed
     - id: auto-merge
       name: Auto Merge
@@ -111,5 +123,6 @@ runs:
           ${{ steps.regression-sniffer.outputs.status && steps.regression-sniffer.outputs.status || '' }}
           ${{ steps.tracker-validator.outputs.status && steps.tracker-validator.outputs.status || '' }}
           ${{ steps.pull-request-validator.outputs.status && steps.pull-request-validator.outputs.status || '' }}
+          ${{ steps.review-buddy.outputs.status && steps.review-buddy.outputs.status || '' }}
           ${{ steps.auto-merge.outputs.status && steps.auto-merge.outputs.status || '' }}
         token: ${{ inputs.token }}
