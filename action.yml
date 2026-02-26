@@ -95,7 +95,7 @@ runs:
       uses: jamacku/review-buddy@main
       with:
         pr-metadata: ${{ steps.metadata.outputs.metadata }}
-        gemini-api-key: ${{ inputs.gemini-api-key }}
+        gemini-api-key: ${{ inputs.gemini-api-token }}
         token: ${{ inputs.token }}
 
     # Merge the PR if all checks passed
