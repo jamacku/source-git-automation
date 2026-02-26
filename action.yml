@@ -94,7 +94,7 @@ runs:
       id: review-buddy
       uses: jamacku/review-buddy@main
       with:
-        pr-metadata: pr-metadata: ${{ inputs.pr-metadata && inputs.pr-metadata || steps.metadata.outputs.metadata }}
+        pr-metadata: ${{ inputs.pr-metadata && inputs.pr-metadata || steps.metadata.outputs.metadata }}
         gemini-api-key: ${{ inputs.gemini-api-token }}
         token: ${{ inputs.token }}
 
