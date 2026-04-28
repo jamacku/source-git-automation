@@ -47,7 +47,7 @@ runs:
     # Lint the commits in the PR
     - id: commit-linter
       name: Lint Commits
-      uses: redhat-plumbers-in-action/advanced-commit-linter@v3
+      uses: jamacku/advanced-commit-linter@refactor
       with:
         pr-metadata: ${{ inputs.pr-metadata && inputs.pr-metadata || steps.metadata.outputs.metadata }}
         token: ${{ inputs.token }}
